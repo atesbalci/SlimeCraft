@@ -3,7 +3,7 @@ namespace SlimeCraft.Models.Items
     public interface IInventoryItem
     {
         ItemType Type { get; }
-        ItemState State { get; }
+        ItemState State { get; set; }
     }
 
     public enum ItemType

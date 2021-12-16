@@ -29,7 +29,10 @@ namespace SlimeCraft.Behaviours
                     starterInputs.MoveInput(context.ReadValue<Vector2>());
                     break;
                 case "Look":
-                    starterInputs.LookInput(context.ReadValue<Vector2>());
+                    if (CursorLock)
+                    {
+                        starterInputs.LookInput(context.ReadValue<Vector2>());
+                    }
                     break;
                 case "Jump":
                     starterInputs.JumpInput(context.action.triggered);

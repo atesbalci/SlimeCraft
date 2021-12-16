@@ -19,6 +19,7 @@ namespace SlimeCraft.Installers
             Container.BindInstance<IMenuStateManager>(menuStateManager).AsSingle();
             Container.BindInstance<IPlayerInputManager>(playerInputManager).AsSingle();
             Container.BindInstance<IHand>(handView).AsSingle();
+            Container.Bind<ICrafter>().To<SimpleCrafter>().AsSingle();
         }
     }
 }
