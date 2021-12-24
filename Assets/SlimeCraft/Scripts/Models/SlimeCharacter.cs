@@ -1,8 +1,8 @@
 namespace SlimeCraft.Models
 {
-    public class SlimeCharacter
+    public class SlimeCharacter : ICharacter
     {
-        private Inventory Inventory { get; }
+        public Inventory Inventory { get; }
         private ICrafter Crafter { get; }
 
         public SlimeCharacter(Inventory inventory, ICrafter crafter)
