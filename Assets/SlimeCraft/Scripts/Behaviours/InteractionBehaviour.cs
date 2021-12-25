@@ -13,6 +13,7 @@ namespace SlimeCraft.Behaviours
         private Transform _camera;
         
         public IInteractable CurrentInteractable { get; private set; }
+        public IHighlightable CurrentHighlightable { get; private set; }
 
         [Inject]
         public void Initialize(SlimeCharacter character)
@@ -31,10 +32,14 @@ namespace SlimeCraft.Behaviours
                 (hit.transform.position - transform.position).sqrMagnitude < (interactionDistance * interactionDistance))
             {
                 CurrentInteractable = hit.collider.GetComponent<IInteractable>();
+                CurrentHighlightable = hit.collider.GetComponent<IHighlightable>();
+                CurrentHighlightable?.SetHighlight(true);
             }
             else
             {
                 CurrentInteractable = null;
+                CurrentHighlightable?.SetHighlight(false);
+                CurrentHighlightable = null;
             }
         }
 
@@ -44,6 +49,8 @@ namespace SlimeCraft.Behaviours
             {
                 CurrentInteractable.Interact(_character);
                 CurrentInteractable = null;
+                CurrentHighlightable?.SetHighlight(false);
+                CurrentHighlightable = null;
             }
         }
     }
