@@ -28,14 +28,7 @@ namespace SlimeCraft.Views
 
         private void ItemClicked(IInventoryItem item, int index)
         {
-            _inventory.Items[index] = null;
-            if (_hand.GrabbedItem != null)
-            {
-                _inventory.Items[index] = _hand.GrabbedItem;
-                _hand.GrabbedItem = null;
-            }
-
-            _hand.GrabbedItem = item;
+            _hand.GrabbedItem = _inventory.PickUp(_hand.GrabbedItem, index);
             RefreshItems();
         }
 
@@ -46,9 +39,9 @@ namespace SlimeCraft.Views
 
         private void RefreshItems()
         {
-            for (int i = 0; i < _inventory.Items.Length; i++)
+            for (int i = 0; i < _inventory.Slots.Length; i++)
             {
-                var item = _inventory.Items[i];
+                var item = _inventory.Slots[i];
                 inventorySlots[i].SetItem(item, _hand.GrabbedItem == item);
             }
         }

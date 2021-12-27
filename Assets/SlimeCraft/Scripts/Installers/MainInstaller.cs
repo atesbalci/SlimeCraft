@@ -20,6 +20,7 @@ namespace SlimeCraft.Installers
             Container.BindInstance<IPlayerInputManager>(playerInputManager).AsSingle();
             Container.BindInstance<IHand>(handView).AsSingle();
             Container.Bind<ICrafter>().To<SimpleCrafter>().AsSingle();
+            Container.Bind<IMissionManager>().To<MainMissionManager>().AsSingle().NonLazy();
         }
     }
 }

@@ -1,28 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using SlimeCraft.Models.Items;
 
 namespace SlimeCraft.Models
 {
     public class Inventory
     {
-        public readonly IInventoryItem[] Items;
+        public event Action<IInventoryItem> ItemPickedUp; 
+        public readonly IInventoryItem[] Slots;
 
         public Inventory()
         {
-            Items = new IInventoryItem[GameRules.InventorySize];
+            Slots = new IInventoryItem[GameRules.InventorySize];
         }
 
         public bool PickUp(IInventoryItem item)
         {
-            for (int i = 0; i < Items.Length; i++)
+            if (item == null) return true;
+            for (int i = 0; i < Slots.Length; i++)
             {
-                if (Items[i] == null)
+                if (Slots[i] == null)
                 {
-                    Items[i] = item;
+                    Slots[i] = item;
+                    ItemPickedUp?.Invoke(item);
                     return true;
                 }
             }
 
             return false;
         }
+        
+        public IInventoryItem PickUp(IInventoryItem item, int index)
+        {
+            IInventoryItem retVal = Slots[index];
+            Slots[index] = item;
+            if (item != null) ItemPickedUp?.Invoke(item);
+            return retVal;
+        }
+
+        public IEnumerable<IInventoryItem> Items => Slots.Where(slot => slot != null);
     }
 }
